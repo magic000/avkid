@@ -1,9 +1,9 @@
-CXXFLAGS = -g -O2 -std=c++11 -pipe -fPIC -D__STDC_FORMAT_MACROS -D__STDC_CONSTANT_MACROS # -Wall
+CXXFLAGS = -g -O2 -std=c++11 -pipe -fPIC -D__STDC_FORMAT_MACROS -D__STDC_CONSTANT_MACROS  # -Wall
 CXXFLAGS += -I./avkid/include
 
 LINKFLAGS = -lavformat -lavcodec -lavutil -lavfilter -lswscale -lfdk-aac
 
-all: libavkid rtmp_bc rtmpdump rtmp_decode_encode mix
+all: libavkid rtmp_bc rtmpdump rtmp_decode_encode mix  audio_mix  multi_out audio_touch
 
 AVKID_HEADER = $(wildcard avkid/include/*.h)
 AVKID_HEADER += $(wildcard avkid/include/*.hpp)
@@ -32,6 +32,16 @@ rtmp_decode_encode: avkid/example/exe_rtmp_decode_encode.cc libavkid
 
 mix: avkid/example/exe_mix.cc libavkid
 	g++ $(CXXFLAGS) -o output/mix avkid/example/exe_mix.cc output/libavkid.a $(LINKFLAGS)
+
+audio_mix: avkid/example/exe_audio_mix.cc libavkid
+	g++ $(CXXFLAGS) -o output/audio_mix avkid/example/exe_audio_mix.cc output/libavkid.a $(LINKFLAGS)
+
+multi_out: avkid/example/exe_multi_out.cc libavkid
+	g++ $(CXXFLAGS) -o output/multi_out avkid/example/exe_multi_out.cc output/libavkid.a $(LINKFLAGS)
+
+audio_touch: avkid/example/exe_audio_touch.cc libavkid
+	g++ $(CXXFLAGS) -o output/audio_touch avkid/example/exe_audio_touch.cc output/libavkid.a -I./third_party/soundtouch/include/soundtouch -L./third_party/soundtouch/lib -lSoundTouch $(LINKFLAGS)
+
 
 clean:
 	rm -rf output
