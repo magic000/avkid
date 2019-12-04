@@ -2,13 +2,14 @@
 #include "avkid.hpp"
 
 namespace avkid {
+#define CODEC_FLAG_QSCALE AV_CODEC_FLAG_QSCALE
 
 void HelpOP::global_init_ffmpeg() {
   av_log_set_level(AV_LOG_DEBUG);
 
-  av_register_all();
+  // av_register_all();
   avformat_network_init();
-  avfilter_register_all();
+  // avfilter_register_all();
 }
 
 void HelpOP::global_deinit_ffmpeg() {

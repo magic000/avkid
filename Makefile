@@ -3,7 +3,8 @@ CXXFLAGS += -I./avkid/include
 
 LINKFLAGS = -lavformat -lavcodec -lavutil -lavfilter -lswscale -lfdk-aac
 
-all: libavkid rtmp_bc rtmpdump rtmp_decode_encode mix  audio_mix  multi_out audio_touch
+all: libavkid rtmp_bc rtmpdump rtmp_decode_encode mix  audio_mix  multi_out audio_touch audio_mix2
+
 
 AVKID_HEADER = $(wildcard avkid/include/*.h)
 AVKID_HEADER += $(wildcard avkid/include/*.hpp)
@@ -35,6 +36,9 @@ mix: avkid/example/exe_mix.cc libavkid
 
 audio_mix: avkid/example/exe_audio_mix.cc libavkid
 	g++ $(CXXFLAGS) -o output/audio_mix avkid/example/exe_audio_mix.cc output/libavkid.a $(LINKFLAGS)
+
+audio_mix2: avkid/example/exe_audio_mix2.cc libavkid
+	g++ $(CXXFLAGS) -o output/audio_mix2 avkid/example/exe_audio_mix2.cc output/libavkid.a $(LINKFLAGS)
 
 multi_out: avkid/example/exe_multi_out.cc libavkid
 	g++ $(CXXFLAGS) -o output/multi_out avkid/example/exe_multi_out.cc output/libavkid.a $(LINKFLAGS)
